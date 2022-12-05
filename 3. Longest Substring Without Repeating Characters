@@ -1,0 +1,52 @@
+Given a string s, find the length of the longest substring without repeating characters.
+
+Example 1:
+
+Input: s = "abcabcbb"
+Output: 3
+Explanation: The answer is "abc", with the length of 3.
+Example 2:
+
+Input: s = "bbbbb"
+Output: 1
+Explanation: The answer is "b", with the length of 1.
+Example 3:
+
+Input: s = "pwwkew"
+Output: 3
+Explanation: The answer is "wke", with the length of 3.
+Notice that the answer must be a substring, "pwke" is a subsequence and not a substring.
+ 
+
+Constraints:
+
+0 <= s.length <= 5 * 104
+s consists of English letters, digits, symbols and spaces.
+
+Approach:
+Keep the hashtable to store characters and their index which was last visisted
+Keep two pointers i and j to point start and end of current string,if s[j] is already present
+(which can be referred using hashtable,also check whether index comes under currenly traversed string interval i.e  start and curr),
+update start to last index they were present+1.
+Parallely update the max length.
+
+Code:
+
+class Solution {
+public:
+    int lengthOfLongestSubstring(string s) {
+    int start=0;
+    int curr=0;
+    int len=0;
+    unordered_map<char,int>mp;
+    while(curr<s.length()){
+    if(mp.find(s[curr])!=mp.end()){
+    start=max(start,mp[s[curr]]+1);
+    }
+    mp[s[curr]]=curr;
+    len=max(len,curr-start+1);
+    curr++;
+    }
+    return len;
+    }
+};
