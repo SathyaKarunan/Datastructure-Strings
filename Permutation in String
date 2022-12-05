@@ -1,0 +1,54 @@
+567. Permutation in String
+Given two strings s1 and s2, return true if s2 contains a permutation of s1, or false otherwise.
+
+In other words, return true if one of s1's permutations is the substring of s2.
+
+Example 1:
+
+Input: s1 = "ab", s2 = "eidbaooo"
+Output: true
+Explanation: s2 contains one permutation of s1 ("ba").
+Example 2:
+
+Input: s1 = "ab", s2 = "eidboaoo"
+Output: false
+ 
+
+Constraints:
+
+1 <= s1.length, s2.length <= 104
+s1 and s2 consist of lowercase English letters.
+
+Approach:
+1)Have two hashtable to store frequency of characters
+2)First find the frequency for length of s1 string
+3)if it matches then return true
+4)If not move the window by 1 
+5)i.e) decease freq of s2[i-s1.size()] by 1 and increase current index's char frequency by 1
+
+Code:
+class Solution {
+public:
+    bool checkInclusion(string s1, string s2) {
+    int m=s1.length();
+    int n=s2.length();
+    if(m>n)return false;
+    vector<int>t1(26,0);
+    vector<int>t2(26,0);
+    
+    int i;
+    for(i=0;i<m;i++){
+    t1[s1[i]-'a']++;
+    t2[s2[i]-'a']++;
+    }
+    if(t1==t2)return true;
+    for(i=m;i<n;i++){
+    t2[s2[i-m]-'a']--;
+    t2[s2[i]-'a']++;
+    if(t1==t2)return true;
+    
+    
+    }
+    return false;
+    }
+};
